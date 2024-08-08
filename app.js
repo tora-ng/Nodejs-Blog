@@ -9,7 +9,7 @@ const connectDB = require('./server/config/db');
 connectDB();
 
 const app = express();
-const PORT = 7070 || process.env.PORT;
+const PORT = 7171 || process.env.PORT;
 
 app.use(express.static('public'));
 // Template Engine

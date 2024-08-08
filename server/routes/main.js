@@ -2,7 +2,10 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
 
-//Routes
+/**
+ * GET
+ * HOME
+ */
 router.get('', async (req, res) => {
     
 
@@ -100,6 +103,24 @@ router.get('', async (req, res) => {
 // }
 
 // insertPostData();
+
+/**
+ * GET
+ * Post : id
+ */
+router.get('/post/:id', async (req, res) => {
+    try {
+        let slug = req.params.id;
+        const data = await Post.findById({ _id: slug });
+        const locals = {
+            title: data.title, // 페이지의 제목
+            description: "Simple Blog created with NodeJs, Express & MongoDb."
+        }
+        res.render('post', {locals, data});
+    } catch (error) {
+        console.log('error: ', error);
+    }
+});
 
 router.get('/about', (req, res) => {
     res.render('about');
