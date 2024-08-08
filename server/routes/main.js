@@ -8,7 +8,6 @@ const Post = require('../models/Post');
  */
 router.get('', async (req, res) => {
 
-
     try {
         const locals = {
             title: "NodeJs Blog",
@@ -32,7 +31,8 @@ router.get('', async (req, res) => {
             locals,
             data,
             current: page,
-            nextPage: hasNextPage ? nextPage : null
+            nextPage: hasNextPage ? nextPage : null,
+            currentRoute : '/'
         });
     } catch (error){
         console.log('error: ', error);
@@ -114,9 +114,10 @@ router.get('/post/:id', async (req, res) => {
         const data = await Post.findById({ _id: slug });
         const locals = {
             title: data.title, // 페이지의 제목
-            description: "Simple Blog created with NodeJs, Express & MongoDb."
+            description: "Simple Blog created with NodeJs, Express & MongoDb"   
         }
-        res.render('post', {locals, data});
+        res.render('post', {locals, data, currentRoute : `/post/${slug}`}
+        );
     } catch (error) {
         console.log('error: ', error);
     }
@@ -162,6 +163,10 @@ router.post('/search', async (req, res) => {
 });
 
 router.get('/about', (req, res) => {
-    res.render('about');
+    res.render('about',
+        {
+            currentRoute: '/about'
+        }
+    );
 });
 module.exports = router;
